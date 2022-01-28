@@ -1,4 +1,5 @@
 // import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -8,6 +9,8 @@ import Category from './pages/Category';
 import FormToDoList from './pages/ToDoList/New';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import { useDispatch } from 'react-redux';
+import { login } from './stores/authentication';
 
 function App() {
   const menus = [
@@ -47,6 +50,16 @@ function App() {
       component: Register
     }
   ];
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('reactData')) {
+      dispatch(
+        login(JSON.parse(localStorage.getItem('reactData')).txtUsername)
+      );
+    }
+  }, []);
 
   return (
     <Router>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import TodoList from '../../components/ToDoList';
 
@@ -8,6 +9,8 @@ function Home() {
   // const [backgroundColor, setBackgroundColor] = useState('#000000');
 
   const [todoList, setTodoList] = useState([]);
+
+  const { txtUsername } = useSelector((state) => state.auth);
 
   // const { search } = useLocation();
 
@@ -45,8 +48,8 @@ function Home() {
     setCount((prevCount) => prevCount + 1);
   };
   return (
-    <div>
-      {/* <h1>Home</h1> */}
+    <div className="container">
+      <h1>Hello, {txtUsername}</h1>
       {/* <button type="button" onClick={handleClick}>
         Increment count
       </button> */}
@@ -62,7 +65,6 @@ function Home() {
         Change Background
       </button> */}
       {/* <h1>This is current count: {count}</h1> */}
-      Home
     </div>
   );
 }

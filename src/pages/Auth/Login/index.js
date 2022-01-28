@@ -10,6 +10,8 @@ import qs from 'qs';
 import AxiosTraining from '../../../axiosCustom';
 import CustomInput from '../../../components/FormInput';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../stores/authentication';
 
 const schema = yup.object().shape({
   txtUsername: yup.string().required('Username belum diisi'),
@@ -26,6 +28,8 @@ function Login() {
 
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
   const onSubmit = async ({ txtUsername, txtPassword }) => {
     const loginData = qs.stringify({
       username: txtUsername,
@@ -37,11 +41,7 @@ function Login() {
       loginData
     );
     if (dataResponseLogin.access_token) {
-      //   dispatch(
-      //     saveUser({
-      //       txtUsername
-      //     })
-      //   );
+      dispatch(login(txtUsername));
       localStorage.setItem(
         'reactData',
         JSON.stringify({
