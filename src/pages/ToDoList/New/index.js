@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Select from 'react-select';
 import FormInput from '../../../components/FormInput';
+import axios from 'axios';
 
 const schema = yup
   .object({
@@ -47,6 +48,7 @@ function FormToDoList() {
       ...data,
       category: data.category.value
     };
+
     console.log(finalData);
   };
   return (
