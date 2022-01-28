@@ -5,7 +5,7 @@ import TodoList from '../../components/ToDoList';
 function TodolistView() {
   const [todoList, setTodoList] = useState([]);
   return (
-    <div>
+    <div className='container'>
       <TodoList title="Todo" data={todoList}></TodoList>
     </div>
   );

@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { GLOBAL_URL } from '../../../global';
+import FormInput from '../../../components/FormInput';
+
+const schema = yup
+  .object({
+    title: yup.string().required('Title is required'),
+    author: yup.string().required('Author is required'),
+    category: yup.mixed().required('Category is required'),
+    description: yup.string(),
+    deadline: yup.string().required('Date is required')
+  })
+  .required();
 
 function FormToDoList() {
-  //   const [title, setTitle] = useState('');
-  //   const [title, setTitle] = useState('');
-  //   const [title, setTitle] = useState('');
-  //   const [title, setTitle] = useState('');
-
   const { id } = useParams();
 
   const {
@@ -15,60 +24,58 @@ function FormToDoList() {
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
   const onSubmit = (data) => console.log(data);
   return (
     <div className="container">
       <h1>{`${id !== 'new' ? 'Edit' : 'Create'}`} Todo</h1>
       <div className="d-flex flex-column gap-4">
+        <FormInput
+          errors={errors}
+          name="title"
+          formTitle="Title"
+          register={register}
+          placeholder="Enter title"
+          className="form-control"
+        ></FormInput>
         <div>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter title"
-            id="title"
-          />
-        </div>
-        <div>
-          <label htmlFor="title">Author</label>
-          <input
-            type="text"
-            className="form-control"
+          <FormInput
+            errors={errors}
+            name="author"
+            formTitle="Author"
+            register={register}
             placeholder="Enter author"
-            id="title"
-            // value={author}
-            // onChange={({target : {value}} => {
-            //     setS
-            // })}
-          ></input>
+            className="form-control"
+          ></FormInput>
         </div>{' '}
         <div>
-          <label htmlFor="title">Category</label>
+          <label htmlFor="category">Category</label>
           <input
             type="text"
             className="form-control"
             placeholder="Enter category"
-            id="title"
+            id="category"
           ></input>
         </div>{' '}
         <div>
-          <label htmlFor="title">Description</label>
-          <input
-            type="text"
-            className="form-control"
+          <FormInput
+            errors={errors}
+            name="description"
+            formTitle="Description"
+            register={register}
             placeholder="Enter description"
-            id="title"
-          ></input>
+            className="form-control"
+          ></FormInput>
         </div>{' '}
         <div>
-          <label htmlFor="title">Deadline</label>
-          <input
-            type="datetime-local"
+          <FormInput
+            errors={errors}
+            name="deadline"
+            formTitle="Deadline"
+            register={register}
+            placeholder="Enter deadline"
             className="form-control"
-            placeholder="Enter title"
-            id="title"
-          ></input>
+          ></FormInput>
         </div>
         <div>
           <button className="btn btn-primary" onClick={() => onSubmit()}>
