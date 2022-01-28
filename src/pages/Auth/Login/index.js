@@ -4,7 +4,12 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
+
+import Swal from 'sweetalert2';
+import qs from 'qs';
+import AxiosTraining from '../../../axiosCustom';
 import CustomInput from '../../../components/FormInput';
+import { useHistory } from 'react-router-dom';
 
 const schema = yup.object().shape({
   txtUsername: yup.string().required('Username belum diisi'),
@@ -19,8 +24,40 @@ function Login() {
     }
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const history = useHistory();
+
+  const onSubmit = async ({ txtUsername, txtPassword }) => {
+    const loginData = qs.stringify({
+      username: txtUsername,
+      password: txtPassword,
+      grant_type: 'password'
+    });
+    const { data: dataResponseLogin } = await AxiosTraining.post(
+      '/login',
+      loginData
+    );
+    if (dataResponseLogin.access_token) {
+      //   dispatch(
+      //     saveUser({
+      //       txtUsername
+      //     })
+      //   );
+      localStorage.setItem(
+        'reactData',
+        JSON.stringify({
+          access_token: dataResponseLogin.access_token,
+          expires_in: dataResponseLogin.expires_in,
+          txtUsername
+        })
+      );
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Login',
+        text: 'Mengalihkan halaman...',
+        timer: 1000
+      });
+      history.push('/home');
+    }
   };
   return (
     <div className="h-100 w-100 bg-primary p-5 d-flex flex-column justify-content-center">
