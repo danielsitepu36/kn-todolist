@@ -1,0 +1,36 @@
+.catCard-container {
+  margin-bottom: 2rem;
+  background-color: #ffeead;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .button-edit {
+    cursor: pointer;
+    color: $primary;
+    height: 2rem;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  .button-close {
+    cursor: pointer;
+    color: $danger;
+    height: 2rem;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+  //   .catCard {
+  //   }
+}

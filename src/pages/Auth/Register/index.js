@@ -9,6 +9,8 @@ import qs from 'qs';
 import CustomInput from '../../../components/FormInput';
 import AxiosTraining from '../../../axiosCustom';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { saveUser } from '../../../stores/authentication';
 
 const schema = yup.object().shape({
   intUserId: yup.number().required(),
@@ -18,7 +20,7 @@ const schema = yup.object().shape({
     .email('Email harus valid')
     .required('Email belum diisi'),
   txtFullname: yup.string().required('Full Name belum diisi'),
-  txtPassword: yup.string().required('Password belum diisi')
+  txtPassword: yup.string().required('Password belum diisi'),
 });
 function Register() {
   const { register, handleSubmit, formState } = useForm({
@@ -28,18 +30,19 @@ function Register() {
       txtPassword: '',
       intUserId: 0,
       txtEmail: '',
-      txtFullname: ''
-    }
+      txtFullname: '',
+    },
   });
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const onSubmit = async ({
     txtUsername,
     txtPassword,
     intUserId,
     txtEmail,
-    txtFullname
+    txtFullname,
   }) => {
     const finalData = {
       txtEmail,
@@ -50,44 +53,44 @@ function Register() {
       bitActive: true,
       txtCreatedBy: '1',
       txtUpdatedBy: null,
-      dtmCreatedDate: new Date().toISOString()
+      dtmCreatedDate: new Date().toISOString(),
     };
 
     try {
       const {
-        data: { bitSuccess }
+        data: { bitSuccess },
       } = await AxiosTraining.post('/user/savedata', {
-        objRequestData: finalData
+        objRequestData: finalData,
       });
       if (bitSuccess) {
         const loginData = qs.stringify({
           username: txtUsername,
           password: txtPassword,
-          grant_type: 'password'
+          grant_type: 'password',
         });
         const { data: dataResponseLogin } = await AxiosTraining.post(
           '/login',
           loginData
         );
         if (dataResponseLogin.access_token) {
-          //   dispatch(
-          //     saveUser({
-          //       txtUsername
-          //     })
-          //   );
+          dispatch(
+            saveUser({
+              txtUsername,
+            })
+          );
           localStorage.setItem(
             'reactData',
             JSON.stringify({
               access_token: dataResponseLogin.access_token,
               expires_in: dataResponseLogin.expires_in,
-              txtUsername
+              txtUsername,
             })
           );
           Swal.fire({
             icon: 'success',
             title: 'Berhasil Login',
             text: 'Mengalihkan halaman...',
-            timer: 1000
+            timer: 1000,
           });
           history.push('/home');
         }
@@ -96,84 +99,84 @@ function Register() {
       Swal.fire({
         icon: 'error',
         title: 'Gagal Register',
-        text: 'Server error'
+        text: 'Server error',
       });
     } finally {
     }
   };
   return (
-    <div className="h-100 w-100 bg-primary p-5 d-flex flex-column justify-content-center">
-      <div className="card p-5 w-50 m-auto">
-        <div className="text-center mb-4">
+    <div className='h-100 w-100 bg-primary p-5 d-flex flex-column justify-content-center'>
+      <div className='card p-5 w-50 m-auto'>
+        <div className='text-center mb-4'>
           <h1>KN-ToDoList</h1>
           <h2>Login</h2>
         </div>
         <form
-          className="d-flex flex-column gap-3"
+          className='d-flex flex-column gap-3'
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Username"
-                formTitle="Username"
+                className='form-control'
+                placeholder='Username'
+                formTitle='Username'
                 register={register}
-                name="txtUsername"
+                name='txtUsername'
                 errors={formState.errors}
               />
             </div>
           </div>
 
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Full Name"
-                formTitle="Full Name"
+                className='form-control'
+                placeholder='Full Name'
+                formTitle='Full Name'
                 register={register}
-                name="txtFullname"
+                name='txtFullname'
                 errors={formState.errors}
               />
             </div>
           </div>
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Email"
+                className='form-control'
+                placeholder='Email'
                 register={register}
-                name="txtEmail"
-                formTitle="Email"
-                type="email"
+                name='txtEmail'
+                formTitle='Email'
+                type='email'
                 errors={formState.errors}
               />
             </div>
           </div>
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Password"
+                className='form-control'
+                placeholder='Password'
                 register={register}
-                name="txtPassword"
-                formTitle="Password"
-                type="password"
+                name='txtPassword'
+                formTitle='Password'
+                type='password'
                 errors={formState.errors}
               />
             </div>
           </div>
           <div>
             Already have an account?{' '}
-            <Link to="/login">
+            <Link to='/login'>
               <strong>Login</strong>
             </Link>
           </div>
           <div>
             <button
-              className="btn btn-primary"
+              className='btn btn-primary'
               // onClick={() => handleSubmit(onSubmit)()}
-              type="submit"
+              type='submit'
             >
               Register
             </button>

@@ -11,19 +11,19 @@ import AxiosTraining from '../../../axiosCustom';
 import CustomInput from '../../../components/FormInput';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../stores/authentication';
+import { saveUser } from '../../../stores/authentication';
 
 const schema = yup.object().shape({
   txtUsername: yup.string().required('Username belum diisi'),
-  txtPassword: yup.string().required('Password belum diisi')
+  txtPassword: yup.string().required('Password belum diisi'),
 });
 function Login() {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       txtUsername: '',
-      txtPassword: ''
-    }
+      txtPassword: '',
+    },
   });
 
   const history = useHistory();
@@ -34,50 +34,54 @@ function Login() {
     const loginData = qs.stringify({
       username: txtUsername,
       password: txtPassword,
-      grant_type: 'password'
+      grant_type: 'password',
     });
     const { data: dataResponseLogin } = await AxiosTraining.post(
       '/login',
       loginData
     );
     if (dataResponseLogin.access_token) {
-      dispatch(login(txtUsername));
+      dispatch(
+        saveUser({
+          txtUsername: txtUsername,
+        })
+      );
       localStorage.setItem(
         'reactData',
         JSON.stringify({
           access_token: dataResponseLogin.access_token,
           expires_in: dataResponseLogin.expires_in,
-          txtUsername
+          txtUsername,
         })
       );
       Swal.fire({
         icon: 'success',
         title: 'Berhasil Login',
         text: 'Mengalihkan halaman...',
-        timer: 1000
+        timer: 1000,
       });
       history.push('/home');
     }
   };
   return (
-    <div className="h-100 w-100 bg-primary p-5 d-flex flex-column justify-content-center">
-      <div className="card p-5 w-50 m-auto">
-        <div className="text-center mb-4">
+    <div className='h-100 w-100 bg-primary p-5 d-flex flex-column justify-content-center'>
+      <div className='card p-5 w-50 m-auto'>
+        <div className='text-center mb-4'>
           <h1>KN-ToDoList</h1>
           <h2>Login</h2>
         </div>
         <form
-          className="d-flex flex-column gap-3"
+          className='d-flex flex-column gap-3'
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Username"
+                className='form-control'
+                placeholder='Username'
                 register={register}
-                formTitle="Username"
-                name="txtUsername"
+                formTitle='Username'
+                name='txtUsername'
                 errors={formState.errors}
               />
             </div>
@@ -91,28 +95,28 @@ function Login() {
           />
         </div> */}
           <div>
-            <div className="">
+            <div className=''>
               <CustomInput
-                className="form-control"
-                placeholder="Password"
+                className='form-control'
+                placeholder='Password'
                 register={register}
-                formTitle="Password"
-                name="txtPassword"
+                formTitle='Password'
+                name='txtPassword'
                 errors={formState.errors}
               />
             </div>
           </div>
           <div>
             Don't have an account?{' '}
-            <Link to="/register">
+            <Link to='/register'>
               <strong>Register</strong>
             </Link>
           </div>
           <div>
             <button
-              className="btn btn-primary"
+              className='btn btn-primary'
               // onClick={() => handleSubmit(onSubmit)()}
-              type="submit"
+              type='submit'
             >
               Login
             </button>

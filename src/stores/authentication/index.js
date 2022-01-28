@@ -1,25 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  txtUsername: ''
+  access_token: null,
+  expires_in: null,
+  txtUsername: null,
+  roleList: null,
+  intRoleID: null,
+  txtRoleName: null,
+  optionsUoM: null,
+  optionsType: null,
+  optionsStatus: null,
 };
 
-export const authenticationSlice = createSlice({
+export const authSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    login: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.txtUsername = action.payload;
+    saveToken: (state, action) => {
+      state.access_token = action.payload.access_token;
+      state.expires_in = action.payload.expires_in;
     },
-    logout: (state) => {}
-  }
+    saveUser: (state, action) => {
+      state.txtUsername = action.payload.txtUsername;
+      // state.roleList = action.payload.roleList;
+    },
+    // setRole: (state, action) => {
+    //   state.intRoleID = action.payload.intRoleID;
+    //   state.txtRoleName = action.payload.txtRoleName;
+    // },
+    logout: (state) => {
+      state.txtUsername = initialState.txtUsername;
+      state = { ...initialState };
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = authenticationSlice.actions;
+export const { saveToken, saveUser, setRole, logout } = authSlice.actions;
 
-export default authenticationSlice.reducer;
+export default authSlice.reducer;

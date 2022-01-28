@@ -1,0 +1,57 @@
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+    color: blue;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.navbar-toggler {
+    border: unset;
+
+    &:focus {
+        box-shadow: unset;
+    }
+}
+
+.form-control {
+    border: 2px solid #dfe1e6;
+}
+
+.form-control:focus {
+    box-shadow: unset;
+    border: 2px solid rgb(76, 154, 255);
+}
+
+.btn {
+    white-space: nowrap;
+}
+
+.modal-header {
+    border-bottom: unset;
+}
+
+.modal-footer {
+    border-top: unset;
+}
+
+.modal-content {
+    border: unset;
+}
+
+.btn-close:focus {
+    box-shadow: unset;
+}
+
+.btn-close {
+    &:hover {
+        background-color: #dfe1e6;
+        color: white;
+        opacity: 0.5;
+    }
+}
+
+// .css-96iu6f-control:hover {
+//     border-color: #4c9aff !important;
+// }

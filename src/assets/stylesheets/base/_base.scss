@@ -1,0 +1,114 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+
+/**
+ * Set up a decent box model on the root element
+ */
+
+// Import fonts
+
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: transparent rgba(0, 0, 0, 0.1) !important;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+.link {
+  cursor: pointer;
+  user-select: none;
+  color: blue;
+}
+
+table {
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+
+  svg {
+    cursor: pointer;
+  }
+
+  thead {
+    tr {
+      th {
+        padding: 1rem !important;
+      }
+    }
+  }
+
+  tbody {
+    tr:last-child {
+      border-bottom-color: transparent;
+    }
+
+    th,
+    td {
+      padding: 1rem !important;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.navbar-tdl {
+  background-color: #96ceb4;
+  color: #303030;
+  padding: 2px;
+
+  .navbar-tdl__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .logo {
+    height: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .menu {
+    display: flex;
+    color: #303030;
+    text-decoration: none;
+    gap: 2rem;
+    margin-right: 2rem;
+
+    .menu-link {
+      color: #303030;
+      text-decoration: none;
+      margin: auto;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .active {
+      font-weight: bold;
+    }
+  }
+
+  //   Link {
+  //     color: #fff;
+  //   }
+}

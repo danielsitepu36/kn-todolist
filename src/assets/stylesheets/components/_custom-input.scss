@@ -1,0 +1,11 @@
+.input-loading {
+    position: relative;
+
+    .loading {
+        position: absolute;
+        right: 1em;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.2;
+    }
+}
