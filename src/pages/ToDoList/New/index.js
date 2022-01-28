@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { GLOBAL_URL } from '../../../global';
+import Select from 'react-select';
 import FormInput from '../../../components/FormInput';
 
 const schema = yup
@@ -16,28 +16,53 @@ const schema = yup
   })
   .required();
 
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
+
 function FormToDoList() {
   const { id } = useParams();
 
   const {
+    control,
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors }
-  } = useForm({ resolver: yupResolver(schema) });
-  const onSubmit = (data) => console.log(data);
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      title: '',
+      author: '',
+      category: null,
+      description: '',
+      deadline: ''
+    }
+  });
+  const onSubmit = (data) => {
+    const finalData = {
+      ...data,
+      category: data.category.value
+    };
+    console.log(finalData);
+  };
   return (
     <div className="container">
       <h1>{`${id !== 'new' ? 'Edit' : 'Create'}`} Todo</h1>
       <div className="d-flex flex-column gap-4">
-        <FormInput
-          errors={errors}
-          name="title"
-          formTitle="Title"
-          register={register}
-          placeholder="Enter title"
-          className="form-control"
-        ></FormInput>
+        <div>
+          <FormInput
+            errors={errors}
+            name="title"
+            formTitle="Title"
+            register={register}
+            placeholder="Enter title"
+            className="form-control"
+          ></FormInput>
+        </div>
         <div>
           <FormInput
             errors={errors}
@@ -49,13 +74,17 @@ function FormToDoList() {
           ></FormInput>
         </div>{' '}
         <div>
-          <label htmlFor="category">Category</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter category"
-            id="category"
-          ></input>
+          <div>Category</div>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select {...field} placeholder="Category" options={options} />
+            )}
+          />
+          {errors.category && (
+            <small className="text-danger">{errors.category.message}</small>
+          )}
         </div>{' '}
         <div>
           <FormInput
@@ -75,10 +104,14 @@ function FormToDoList() {
             register={register}
             placeholder="Enter deadline"
             className="form-control"
+            type="datetime-local"
           ></FormInput>
         </div>
         <div>
-          <button className="btn btn-primary" onClick={() => onSubmit()}>
+          <button className="btn btn-danger me-3" onClick={() => reset()}>
+            Reset
+          </button>
+          <button className="btn btn-primary" onClick={handleSubmit(onSubmit)}>
             Submit
           </button>
         </div>
