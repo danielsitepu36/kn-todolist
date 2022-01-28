@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import CustomInput from '../../../components/FormInput';
+import AxiosTraining from '../../../axiosCustom';
 
 const schema = yup.object().shape({
   intUserId: yup.number().required(),
