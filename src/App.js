@@ -5,29 +5,35 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ToDoList from './pages/ToDoList';
 import Category from './pages/Category';
+import FormToDoList from './pages/ToDoList/New';
 
 function App() {
   const menus = [
     {
       id: 0,
       path: '/home',
-      component: Home,
+      component: Home
     },
     {
       id: 1,
       path: '/about',
-      component: About,
+      component: About
     },
     {
       id: 2,
       path: '/task',
-      component: ToDoList,
+      component: ToDoList
     },
     {
       id: 3,
       path: '/category',
-      component: Category,
+      component: Category
     },
+    {
+      id: 4,
+      path: '/task/:id',
+      component: FormToDoList
+    }
   ];
 
   return (

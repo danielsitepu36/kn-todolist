@@ -1,7 +1,14 @@
 import React from 'react';
+import { useState } from 'react/cjs/react.development';
+import TodoList from '../../components/ToDoList';
 
-function index() {
-  return <h1>ToDoList</h1>;
+function TodolistView() {
+  const [todoList, setTodoList] = useState([]);
+  return (
+    <div>
+      <TodoList title="Todo" data={todoList}></TodoList>
+    </div>
+  );
 }
 
-export default index;
+export default TodolistView;
