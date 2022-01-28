@@ -6,6 +6,8 @@ import About from './pages/About';
 import ToDoList from './pages/ToDoList';
 import Category from './pages/Category';
 import FormToDoList from './pages/ToDoList/New';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
 
 function App() {
   const menus = [
@@ -33,6 +35,16 @@ function App() {
       id: 4,
       path: '/task/:id',
       component: FormToDoList
+    },
+    {
+      id: 5,
+      path: '/login',
+      component: Login
+    },
+    {
+      id: 6,
+      path: '/register',
+      component: Register
     }
   ];
 
